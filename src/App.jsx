@@ -5,21 +5,34 @@ import Split from "react-split"
 
 export default function App() {
   const [notes, setNotes] = React.useState([])
-  const [currentId, setCurrentId] = React.useState(0)
+  const [currentNote, setCurrentNote] = React.useState("")
 
   function createNote(){
     const newNote = {
       id: notes.length+1,
-      body:"Welcome to new notes..."
+      body:"#Welcome to new notes..."
     }
-    changeCurrentId(newNote.id)
+    setCurrentNote(newNote)
     setNotes(prevNotes => {
       return ([newNote, ...prevNotes])
     })
   }
 
-  function changeCurrentId(newId){
-    setCurrentId(newId)
+  function updateNote(text){
+    setNotes(prevNotes => {
+      return (prevNotes.map(note => {
+        return note.id === currentNote.id ? {
+          ...note,
+          body: text
+        }:note
+      }))
+    })
+  }
+
+  function findCurrentNote(){
+    return notes.find(note => {
+      return note.id === currentNote.id
+    }) || ""
   }
 
   return (
@@ -36,8 +49,11 @@ export default function App() {
         <Sidebar 
           notes={notes}
           createNote={createNote}
-          currentId={currentId}/>
-        <Content />
+          currentNote={currentNote}/>
+        <Content 
+          currentNote={findCurrentNote()}
+          updateNote={updateNote}
+        />
       </Split>
     </div>
   )
