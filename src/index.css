@@ -24,6 +24,11 @@ body{
     height: 10vh;
     align-items: center;
     color: gray;
+    cursor: pointer;
+}
+
+.mde-preview {
+    height: 681px;
 }
 
 .wrap{

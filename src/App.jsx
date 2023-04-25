@@ -4,8 +4,12 @@ import Sidebar from "./components/SideBar"
 import Split from "react-split"
 
 export default function App() {
-  const [notes, setNotes] = React.useState([])
-  const [currentNote, setCurrentNote] = React.useState("")
+  const [notes, setNotes] = React.useState(JSON.parse(localStorage.getItem("notes")) || [])
+  const [currentNote, setCurrentNote] = React.useState(notes[0] || "")
+
+  React.useEffect(() => {
+    localStorage.setItem("notes",JSON.stringify(notes))
+  },[notes])
 
   function createNote(){
     const newNote = {
@@ -16,6 +20,17 @@ export default function App() {
     setNotes(prevNotes => {
       return ([newNote, ...prevNotes])
     })
+  }
+
+  function updateCurrentNote(id){
+    let Note = currentNote
+    for(let i=0; i<notes.length; i++){
+      if(notes[i].id === id){
+        Note = notes[i]
+        break
+      }  
+    }
+    setCurrentNote(Note)
   }
 
   function updateNote(text){
@@ -49,7 +64,9 @@ export default function App() {
         <Sidebar 
           notes={notes}
           createNote={createNote}
-          currentNote={currentNote}/>
+          currentNote={currentNote}
+          updateCurrentNote={updateCurrentNote}
+          />
         <Content 
           currentNote={findCurrentNote()}
           updateNote={updateNote}
