@@ -1,3 +1,8 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
 .sidebar-title{
     display: flex;
     align-items: center;
@@ -31,4 +36,30 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.starting-screen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    height: 100vh;
+}
+
+.starting-screen > h1{
+    margin: 0;
+}
+
+.create-button{
+    border: none;
+    border-radius: 3px;
+    background-color: #4A4E74;
+    color: white;
+    cursor: pointer;
+    padding: 1rem;
+    text-align: center;
+}
+
+.starting-container{
+    text-align: center;
 }

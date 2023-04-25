@@ -35,8 +35,8 @@ export default function App() {
     }) || ""
   }
 
-  return (
-    <div>
+  return notes.length > 0?
+   (<div>
       <Split 
         className="wrap"
         sizes={[25, 75]}
@@ -55,6 +55,17 @@ export default function App() {
           updateNote={updateNote}
         />
       </Split>
+    </div>
+  ):
+  (
+    <div className="starting-screen">
+      <div className="starting-container">
+        <h1>You have no notes, create one now!!</h1>
+        <button 
+          className="create-button"
+          onClick={createNote}
+          >Create</button>
+      </div>
     </div>
   )
 }
