@@ -6,7 +6,7 @@
 
 .selected-note{
     display: flex;
-    width: 20%;
+    width: 100%;
     height: 10vh;
     align-items: center;
     background-color: black;
@@ -15,12 +15,20 @@
 
 .non-selected-note{
     display: flex;
-    width: 20%;
+    width: 100%;
     height: 10vh;
     align-items: center;
-    background-color: grey;
-    color: white;
+    color: gray;
 }
 
+.wrap{
+    display: flex;
+}
 
-
+.gutter{
+    background-color: white;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}

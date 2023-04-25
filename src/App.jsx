@@ -1,6 +1,7 @@
 import React from "react"
 import Content  from "./components/Content"
 import Sidebar from "./components/SideBar"
+import Split from "react-split"
 
 export default function App() {
   const [notes, setNotes] = React.useState([])
@@ -23,11 +24,21 @@ export default function App() {
 
   return (
     <div>
-      <Sidebar 
-        notes={notes}
-        createNote={createNote}
-        currentId={currentId}/>
-      <Content />
+      <Split 
+        className="wrap"
+        sizes={[25, 75]}
+        gutterSize={20}
+        gutterAlign="center"
+        dragInterval={1}
+        direction="horizontal"
+        cursor="col-resize"
+      >
+        <Sidebar 
+          notes={notes}
+          createNote={createNote}
+          currentId={currentId}/>
+        <Content />
+      </Split>
     </div>
   )
 }
