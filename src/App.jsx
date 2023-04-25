@@ -3,18 +3,23 @@ import Content  from "./components/Content"
 import Sidebar from "./components/SideBar"
 import Split from "react-split"
 
+let deleted = false
 export default function App() {
   const [notes, setNotes] = React.useState(JSON.parse(localStorage.getItem("notes")) || [])
   const [currentNote, setCurrentNote] = React.useState(notes[0] || "")
 
   React.useEffect(() => {
     localStorage.setItem("notes",JSON.stringify(notes))
+    if(deleted){
+      setCurrentNote(notes[0])
+      deleted = false
+    }
   },[notes])
 
   function createNote(){
     const newNote = {
       id: notes.length+1,
-      body:"#Welcome to new notes..."
+      body:"#Welcome to new notes...#"
     }
     setCurrentNote(newNote)
     setNotes(prevNotes => {
@@ -35,12 +40,15 @@ export default function App() {
 
   function updateNote(text){
     setNotes(prevNotes => {
-      return (prevNotes.map(note => {
-        return note.id === currentNote.id ? {
-          ...note,
-          body: text
-        }:note
-      }))
+      let tempNote = []
+      for(let i=0; i<prevNotes.length; i++){
+        if(prevNotes[i].id === currentNote.id){
+          tempNote.unshift({...prevNotes[i],body:text})
+        }else{
+          tempNote.push(prevNotes[i])
+        }
+      }
+      return tempNote
     })
   }
 
@@ -48,6 +56,11 @@ export default function App() {
     return notes.find(note => {
       return note.id === currentNote.id
     }) || ""
+  }
+
+  function deleteNote(id){
+    setNotes(prevNotes => prevNotes.filter(note => note.id != id))
+    deleted = true
   }
 
   return notes.length > 0?
@@ -66,6 +79,7 @@ export default function App() {
           createNote={createNote}
           currentNote={currentNote}
           updateCurrentNote={updateCurrentNote}
+          deleteNote={deleteNote}
           />
         <Content 
           currentNote={findCurrentNote()}
